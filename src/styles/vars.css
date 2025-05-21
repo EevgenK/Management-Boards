@@ -1,0 +1,12 @@
+:root {
+  --main-bg_color: #fff;
+  --bg-color: yellow;
+  --bg-color_hover: orange;
+  --text-color: #121417;
+  --text-grey: #8a8a89;
+  --green-color: #38cd3e;
+
+  --error-color: rgb(250, 59, 59);
+  --shadow: rgba(197, 233, 233, 0.3);
+  --transition: 250ms ease-in-out;
+}

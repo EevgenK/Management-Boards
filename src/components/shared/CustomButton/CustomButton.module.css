@@ -1,0 +1,21 @@
+.btn {
+  width: fit-content;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.56;
+  border-radius: 12px;
+  padding: 16px 48px;
+  text-align: center;
+  background-color: var(--bg-color);
+  transition: background-color var(--transition);
+}
+.btn:hover,
+.btn:focus {
+  background-color: var(--bg-color_hover);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
