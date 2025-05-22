@@ -6,11 +6,17 @@ export interface IBoard extends Document {
   name: string;
 }
 
-const boardSchema = new Schema<IBoard>({
-  hashId: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-});
+const boardSchema = new Schema<IBoard>(
+  {
+    hashId: { type: String, required: true, unique: true },
+    name: { type: String, required: true, min: 5, max: 20 },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
+);
 
 boardSchema.post('save', handleValidationError);
 
-export default model('Board', boardSchema);
+export const BoardsCollection = model('Board', boardSchema);

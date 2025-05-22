@@ -26,4 +26,4 @@ const cardSchema = new Schema<ICard>({
 });
 cardSchema.post('save', handleValidationError);
 
-export default model('Card', cardSchema);
+export const CardsCollection = model('Card', cardSchema);

@@ -7,6 +7,8 @@ import {
   errorHandler,
 } from './middlewares/index';
 
+import router from './routs';
+
 const PORT = Number(getEnvVar('PORT', '4000'));
 export const setupServer = () => {
   const app = express();
@@ -29,16 +31,10 @@ export const setupServer = () => {
   );
 
   app.get('/', domainHandler);
-  app.get('/contacts', async (req, res) => {
-    const contacts = [1, 2, 3, 4];
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully found contacts!',
-      data: contacts,
-    });
-  });
+  app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

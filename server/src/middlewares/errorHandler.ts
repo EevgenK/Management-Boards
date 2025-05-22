@@ -2,7 +2,7 @@ import { ErrorRequestHandler } from 'express';
 import { HttpError } from 'http-errors';
 import mongoose from 'mongoose';
 
-export const errorHandler: ErrorRequestHandler = (err, _req, res) => {
+export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof HttpError) {
     res.status(err.statusCode || 500).json({
       status: err.statusCode || 500,
