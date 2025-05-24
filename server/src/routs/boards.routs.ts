@@ -3,6 +3,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper';
 import {
   createBoardController,
   getBoardController,
+  deleteBoardController,
 } from '../controllers/board.controllers';
 import { isValidId } from '../middlewares/isValidId';
 import { validateBody } from '../middlewares/validateBody';
@@ -15,5 +16,6 @@ router.post(
   ctrlWrapper(createBoardController),
 );
 router.get('/:id', isValidId, ctrlWrapper(getBoardController));
+router.delete('/:id', isValidId, ctrlWrapper(deleteBoardController));
 
 export default router;

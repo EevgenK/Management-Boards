@@ -1,5 +1,10 @@
 import { RequestHandler } from 'express';
-import { createBoard, getBoard } from '../services/board.services';
+import {
+  createBoard,
+  deleteBoardById,
+  getBoard,
+} from '../services/board.services';
+import createHttpError from 'http-errors';
 
 export const createBoardController: RequestHandler = async (req, res) => {
   const board = await createBoard(req.body);
@@ -16,5 +21,18 @@ export const getBoardController: RequestHandler = async (req, res) => {
     status: 201,
     message: 'Successfully found a board!',
     data: board,
+  });
+};
+
+export const deleteBoardController: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  const board = await deleteBoardById(id);
+  if (!board) {
+    throw createHttpError(404, 'Board not found');
+  }
+  res.json({
+    status: 204,
+    message: `Successfully deleted a board!`,
   });
 };
