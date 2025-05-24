@@ -1,0 +1,27 @@
+.search_form {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+  gap: 12px;
+}
+.input {
+  outline: none;
+  padding: 8px;
+
+  border: 3px solid var(--bg-color);
+  border-radius: 8px;
+  width: 80%;
+}
+.button {
+  display: flex;
+  gap: 6px;
+}
+.icon {
+  font-size: 30px;
+  color: inherit;
+  transition: scale var(--transition);
+}
+.button:hover .icon,
+.button:focus .icon {
+  scale: 1.2;
+}

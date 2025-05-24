@@ -1,0 +1,14 @@
+:root {
+  --main-bg_color: #8b8484;
+  --bg-color: rgb(148, 14, 238);
+  --bg-color_hover: rgb(210, 125, 236);
+  --text-color: #f1e7e7;
+  --text-grey: #8a8a89;
+  --second-color: #674feb;
+  --shadow: 13px 13px 12px 3px rgba(100, 84, 100, 0.57);
+  --main-bg: linear-gradient(to bottom, var(--bg-color), var(--bg-color_hover));
+
+  --error-color: rgb(250, 59, 59);
+
+  --transition: 250ms ease-in-out;
+}

@@ -1,0 +1,21 @@
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+.text {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.pre_title {
+  margin-bottom: 10px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: upper-latin;
+  list-style-position: inside;
+  margin-bottom: 20px;
+}
