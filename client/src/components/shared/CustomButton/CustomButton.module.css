@@ -9,7 +9,7 @@
   text-align: center;
   cursor: pointer;
   background-color: var(--bg-color);
-  transition: background-color var(--transition);
+  transition: all var(--transition);
 }
 .btn:hover,
 .btn:focus {

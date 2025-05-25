@@ -1,0 +1,21 @@
+.button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  width: 50%;
+}
+.icon {
+  font-size: 30px;
+  color: inherit;
+  transition: scale var(--transition);
+}
+.button:hover .icon,
+.button:focus .icon {
+  scale: 1.2;
+}
+.error {
+  font-size: 12px;
+  color: var(--red-color);
+}

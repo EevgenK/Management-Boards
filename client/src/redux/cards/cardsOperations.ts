@@ -4,6 +4,7 @@ import {
   BackendError,
   BackendSuccessResponse,
   BatchUpdateCard,
+  EditCardType,
   ICard,
 } from '../../../../shared/types';
 import { handleAxiosError } from '../../utils/api/handleAxiosError';
@@ -49,3 +50,20 @@ export const batchUpdateCards = createAsyncThunk<
     }
   },
 );
+
+export const editCard = createAsyncThunk<
+  ICard,
+  { boardId: string; query: EditCardType },
+  { rejectValue: BackendError }
+>('cards/editCard', async ({ boardId, query }, { rejectWithValue }) => {
+  try {
+    const res = await instance.patch<BackendSuccessResponse<ICard>>(
+      `cards/${boardId}`,
+      query,
+    );
+    console.log('RESP--->>', res.data.data);
+    return res.data.data;
+  } catch (err) {
+    return rejectWithValue(handleAxiosError(err));
+  }
+});

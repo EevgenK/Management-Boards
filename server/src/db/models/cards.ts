@@ -6,7 +6,7 @@ const cardSchema = new Schema<ICard>(
   {
     boardId: { type: String, required: true },
     title: { type: String, required: true, min: 5, max: 20 },
-    description: { type: String, min: 5, max: 40 },
+    description: { type: String, min: 5, max: 100 },
     status: {
       type: String,
       enum: ['todo', 'inprogress', 'done'],

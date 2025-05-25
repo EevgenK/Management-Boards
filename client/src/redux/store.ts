@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import boardsReducer from './board/boardSlice';
 import cardsReducer from './cards/cardsSlice';
+import modalReducer from './modal/modalSlice';
 import storage from 'redux-persist/lib/storage';
 
 import { persistStore, persistReducer } from 'redux-persist';
@@ -8,6 +9,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 const rootReducer = combineReducers({
   cards: cardsReducer,
   boards: boardsReducer,
+  modal: modalReducer,
 });
 
 const persistConfig = {

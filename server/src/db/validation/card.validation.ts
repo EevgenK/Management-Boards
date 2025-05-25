@@ -19,7 +19,7 @@ export const createCardSchema = Joi.object({
     element: 'description',
     required: false,
     minLength: 5,
-    maxLength: 40,
+    maxLength: 100,
   }),
   status: createEnumValidation('status'),
   order: createNumberValidation({
@@ -44,11 +44,6 @@ export const updateCardSchema = Joi.object({
     required: false,
     minLength: 5,
     maxLength: 40,
-  }),
-  status: createEnumValidation('status'),
-  order: createNumberValidation({
-    element: 'order',
-    required: true,
   }),
 });
 export const deleteCardSchema = Joi.object({

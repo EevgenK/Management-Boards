@@ -8,7 +8,6 @@ export type ColumnProps = {
   cards: ICard[];
 };
 const Column = ({ status, cards }: ColumnProps) => {
-  console.log(status);
   return (
     <Droppable droppableId={status}>
       {(provided, snapshot) => (

@@ -11,6 +11,7 @@
   box-shadow: var(--shadow);
 }
 .label {
+  cursor: pointer;
   text-transform: uppercase;
 }
 .input {
@@ -39,5 +40,6 @@
   scale: 1.2;
 }
 .error {
+  font-size: 12px;
   color: var(--red-color);
 }

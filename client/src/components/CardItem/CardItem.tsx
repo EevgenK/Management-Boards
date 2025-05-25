@@ -1,10 +1,11 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { ICard } from '../../../../shared/types';
-import { IoCreateSharp } from 'react-icons/io5';
-import { ImBin } from 'react-icons/im';
+import { EditCardType } from '../../../../shared/types';
+
 import s from './CardItem.module.css';
+
+import CardButtons from '../CardButtons/CardButtons';
 export type CardItemProps = {
-  card: Pick<ICard, '_id' | 'title' | 'description'>;
+  card: EditCardType;
   index: number;
 };
 
@@ -17,16 +18,15 @@ const CardItem = ({ card, index }: CardItemProps) => (
         {...provided.dragHandleProps}
         className={`${s.card} ${snapshot.isDragging ? s.dragging : ''}`}
       >
-        <div>{card.title}</div>
-        <small>{card.description}</small>
-        <div className={s.buttons_wrap}>
-          <button className={s.btn} type="button">
-            <IoCreateSharp className={s.icon} />
-          </button>
-          <button className={s.btn} type="button">
-            <ImBin className={s.icon} />
-          </button>
-        </div>
+        <h4>{card.title}</h4>
+        <p>{card.description}</p>
+        <CardButtons
+          item={{
+            _id: card._id,
+            title: card.title,
+            description: card.description,
+          }}
+        />
       </div>
     )}
   </Draggable>

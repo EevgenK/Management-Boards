@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICard } from '../../../../shared/types';
-import { batchUpdateCards, fetchCards } from './cardsOperations';
+import { batchUpdateCards, editCard, fetchCards } from './cardsOperations';
 
 interface CardState {
   cards: ICard[] | [];
@@ -59,6 +59,20 @@ const cardsSlice = createSlice({
       } else {
         state.error = 'Something went wrong. Try again please.';
       }
+    });
+    builder.addCase(editCard.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(editCard.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.cards = state.cards.map((card) =>
+        card._id === action.payload._id ? action.payload : card,
+      );
+      state.error = null;
+    });
+    builder.addCase(editCard.rejected, (state, action) => {
+      state.error = action.payload?.message || 'Something went wrong';
     });
   },
 });

@@ -1,0 +1,32 @@
+.form {
+  margin: 0 auto;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.edit {
+  text-transform: uppercase;
+}
+.label {
+  text-align: start;
+  cursor: pointer;
+}
+.input {
+  outline: none;
+  padding: 8px;
+  width: 250px;
+  border: 3px solid var(--bg-color);
+  border-radius: 8px;
+  width: 100%;
+}
+.wrap {
+  display: flex;
+  gap: 6px;
+}
+
+@media screen and (min-width: 768px) {
+  .form {
+    padding: 30px;
+  }
+}

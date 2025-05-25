@@ -30,3 +30,4 @@ export interface BatchUpdateCard {
   status: 'todo' | 'inprogress' | 'done';
   order: number;
 }
+export type EditCardType = Pick<ICard, '_id' | 'title' | 'description'>;
