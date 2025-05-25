@@ -1,13 +1,6 @@
-import { model, Schema, Document } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { handleValidationError } from '../../utils/handleValidationError';
-
-export interface ICard extends Document {
-  boardId: string;
-  title: string;
-  description?: string;
-  status: 'todo' | 'inprogress' | 'done';
-  order: number;
-}
+import { ICard } from '../../../../shared/types';
 
 const cardSchema = new Schema<ICard>(
   {

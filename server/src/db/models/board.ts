@@ -1,10 +1,6 @@
-import { Document, model, Schema } from 'mongoose';
+import { IBoard } from './../../../../shared/types';
+import { model, Schema } from 'mongoose';
 import { handleValidationError } from '../../utils/handleValidationError';
-
-export interface IBoard extends Document {
-  hashId: string;
-  name: string;
-}
 
 const boardSchema = new Schema<IBoard>(
   {

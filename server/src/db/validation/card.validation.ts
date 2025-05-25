@@ -58,3 +58,17 @@ export const deleteCardSchema = Joi.object({
     'any.required': '"_id" is required',
   }),
 });
+export const batchUpdateSchema = Joi.array().items(
+  Joi.object({
+    _id: Joi.string().pattern(objectIdPattern).required().messages({
+      'string.pattern.base': '"_id" must be a valid ObjectId',
+      'string.base': '"_id" must be a string',
+      'any.required': '"_id" is required',
+    }),
+    status: createEnumValidation('status'),
+    order: createNumberValidation({
+      element: 'order',
+      required: true,
+    }),
+  }),
+);

@@ -3,6 +3,8 @@ import { RequestHandler } from 'express';
 import {
   createCard,
   deleteCardById,
+  getCards,
+  updateBatchCard,
   updateCard,
 } from '../services/cards.services';
 
@@ -12,6 +14,14 @@ export const createCardController: RequestHandler = async (req, res) => {
     status: 201,
     message: 'Successfully created a card!',
     data: board,
+  });
+};
+export const getCardsController: RequestHandler = async (req, res) => {
+  const cards = await getCards(req.params.boardId);
+  res.json({
+    status: 201,
+    message: 'Successfully found a cards!',
+    data: cards,
   });
 };
 
@@ -43,5 +53,17 @@ export const deleteCardController: RequestHandler = async (req, res) => {
   res.json({
     status: 204,
     message: `Successfully deleted a card!`,
+  });
+};
+export const updateBatchController: RequestHandler = async (req, res) => {
+  const { boardId } = req.params;
+  const cards = await updateBatchCard(boardId, req.body);
+  if (!cards.length) {
+    throw createHttpError(500, 'No cards updated or found');
+  }
+  res.json({
+    status: 200,
+    message: `Successfully uploaded a cards!`,
+    data: cards,
   });
 };

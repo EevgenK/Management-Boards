@@ -1,0 +1,30 @@
+.column {
+  flex: 1;
+  background-color: #ee5b5b;
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  transition: background-color 0.3s;
+}
+.column_title {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.column.dragging_over {
+  background-color: #d1eaff;
+}
+.todo {
+  background: var(--todo-colo);
+}
+
+.inprogress {
+  background: var(--onprogress-color);
+}
+
+.done {
+  background: var(--done-color);
+}

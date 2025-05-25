@@ -1,32 +1,31 @@
 import createHttpError from 'http-errors';
 import { BoardsCollection } from '../db/models/board';
-import { CardsCollection } from '../db/models/cards';
+
 import { generateHashId } from '../utils/generateHashId';
 
-export const createBoard = async (payload: {
-  inputId: string;
-  name: string;
-}) => {
-  const { inputId, name } = payload;
-  const hashId = generateHashId(inputId);
-  const existing = await BoardsCollection.findOne({ hashId });
+export const createBoard = async (payload: { name: string }) => {
+  const { name } = payload;
+  const hashId = generateHashId(name);
+  const existing = await BoardsCollection.findOne({
+    hashId,
+  });
   if (existing)
-    throw createHttpError(409, `Board with ID ${inputId} already exist`);
+    throw createHttpError(409, `Board with ID ${hashId} already exist`);
 
   const board = await BoardsCollection.create({ hashId, name });
-  return board;
+  const { _id, ...data } = board.toObject();
+  return data;
 };
 
 export const getBoard = async (inputId: string) => {
-  const hashId = generateHashId(inputId);
-  const board = await BoardsCollection.findOne({ hashId });
+  const board = await BoardsCollection.findOne({ hashId: inputId });
 
   if (!board) {
     throw createHttpError(404, 'Board not found');
   }
 
-  const cards = await CardsCollection.find({ boardId: hashId });
-  return { board, cards };
+  const { _id, ...data } = board.toObject();
+  return data;
 };
 
 export const deleteBoardById = async (id: string) => {

@@ -2,24 +2,39 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { IoCreate } from 'react-icons/io5';
 import s from './NewBoardForm.module.css';
 import CustomButton from '../shared/CustomButton/CustomButton';
+import { newBoardSchema } from '../../utils/validation/newBoardSchema ';
+import { validateYupSchema } from '../../utils/validation/validateYupSchema';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { createBoard } from '../../redux/board/boardOperations';
 
 const NewBoardForm = () => {
-  const [newBoard, setNewBoard] = useState({ name: '', id: '' });
+  const dispatch = useDispatch<AppDispatch>();
+  const [newBoard, setNewBoard] = useState('');
+  const [errors, setErrors] = useState<{ name?: string }>({});
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewBoard((prev) => ({ ...prev, [name]: value }));
+    const { value } = e.target;
+    setNewBoard(value);
+    setErrors({});
   };
 
-  const onHandleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onHandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedName = newBoard.name.trim();
-    const trimmedId = newBoard.id.trim();
-    if (trimmedName || trimmedId) {
-      console.log({ name: trimmedName, id: trimmedId });
-      setNewBoard({ name: '', id: '' });
+    const trimmed = newBoard.trim();
+    const { isValid, errors } = await validateYupSchema(newBoardSchema, {
+      name: trimmed,
+    });
+
+    if (isValid) {
+      await dispatch(createBoard(trimmed));
+      setNewBoard('');
+      setErrors({});
+    } else {
+      setErrors(errors);
     }
   };
+
   return (
     <form onSubmit={onHandleSubmit} className={s.form}>
       <label htmlFor="name" className={s.label}>
@@ -27,7 +42,7 @@ const NewBoardForm = () => {
       </label>
       <input
         id="name"
-        value={newBoard.name}
+        value={newBoard}
         onChange={handleChange}
         name="name"
         className={s.input}
@@ -36,20 +51,8 @@ const NewBoardForm = () => {
         autoFocus
         placeholder="Type a board name here..."
       />
-      <label htmlFor="id" className={s.label}>
-        Id:
-      </label>
-      <input
-        id="id"
-        value={newBoard.id}
-        onChange={handleChange}
-        name="id"
-        className={s.input}
-        type="text"
-        autoComplete="off"
-        autoFocus
-        placeholder="Type a board ID here..."
-      />
+      {errors && <p className={s.error}>{errors?.name}</p>}
+
       <CustomButton additionalClass={s.button} type="submit">
         {' '}
         Create <IoCreate className={s.icon} />

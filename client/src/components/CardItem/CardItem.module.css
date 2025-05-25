@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--bg-color_hover);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: grab;
+  min-height: 150px;
+}
+
+.card.dragging {
+  transform: rotate(3deg) scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.buttons_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+}
+.icon {
+  width: 25px;
+  height: 25px;
+  color: #ffff;
+}
+.btn:hover,
+.btn:focus {
+  transition: transform var(--transition);
+}
+.btn:hover {
+  transform: scale(1.1);
+}

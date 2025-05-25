@@ -38,3 +38,6 @@
 .button:focus .icon {
   scale: 1.2;
 }
+.error {
+  color: var(--red-color);
+}

@@ -3,6 +3,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper';
 import { CardsCollection } from '../db/models/cards';
 import { validateBody } from '../middlewares/validateBody';
 import {
+  batchUpdateSchema,
   createCardSchema,
   deleteCardSchema,
   updateCardSchema,
@@ -10,7 +11,9 @@ import {
 import {
   createCardController,
   deleteCardController,
+  getCardsController,
   patchCardController,
+  updateBatchController,
 } from '../controllers/cards.controllers';
 import { isValidId } from '../middlewares/isValidId';
 
@@ -20,6 +23,7 @@ router.post(
   validateBody(createCardSchema),
   ctrlWrapper(createCardController),
 );
+router.get('/:boardId', isValidId, ctrlWrapper(getCardsController));
 
 router.patch(
   '/:id',
@@ -33,6 +37,13 @@ router.delete(
   isValidId,
   validateBody(deleteCardSchema),
   ctrlWrapper(deleteCardController),
+);
+
+router.put(
+  '/batch/:boardId',
+  isValidId,
+  validateBody(batchUpdateSchema),
+  ctrlWrapper(updateBatchController),
 );
 
 export default router;

@@ -1,9 +1,9 @@
 import createHttpError from 'http-errors';
 import { RequestHandler } from 'express';
-import { ObjectSchema } from 'joi';
+import { Schema } from 'joi';
 
 export const validateBody =
-  (schema: ObjectSchema): RequestHandler =>
+  (schema: Schema): RequestHandler =>
   async (req, _res, next) => {
     try {
       await schema.validateAsync(req.body, {

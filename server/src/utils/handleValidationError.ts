@@ -1,7 +1,6 @@
 import createHttpError from 'http-errors';
 import type { CallbackError } from 'mongoose';
-import { IBoard } from '../db/models/board';
-import { ICard } from '../db/models/cards';
+import { IBoard, ICard } from '../../../shared/types';
 
 export const handleValidationError = (
   error: CallbackError,

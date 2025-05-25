@@ -1,4 +1,6 @@
-import { CardsCollection, ICard } from '../db/models/cards';
+import createHttpError from 'http-errors';
+import { BatchUpdateCard, ICard } from '../../../shared/types';
+import { CardsCollection } from '../db/models/cards';
 
 export const createCard = async (payload: ICard) => {
   const contact = await CardsCollection.create({
@@ -6,6 +8,15 @@ export const createCard = async (payload: ICard) => {
   });
   return contact;
 };
+
+export const getCards = async (payload: string) => {
+  const cards = await CardsCollection.find({ boardId: payload });
+  if (!cards.length) {
+    throw createHttpError(404, 'Cards not found');
+  }
+  return cards;
+};
+
 export const updateCard = async (
   id: string,
   _id: string,
@@ -32,5 +43,24 @@ export const deleteCardById = async (id: string, _id: string) => {
     return card;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const updateBatchCard = async (
+  boardId: string,
+  payload: BatchUpdateCard[],
+) => {
+  const bulkOps = payload.map((card) => ({
+    updateOne: {
+      filter: { _id: card._id, boardId },
+      update: { $set: { status: card.status, order: card.order } },
+    },
+  }));
+  try {
+    await CardsCollection.bulkWrite(bulkOps);
+    const updatedCards = await CardsCollection.find({ boardId }).lean();
+    return updatedCards;
+  } catch (err) {
+    throw createHttpError(500, `Batch update error: ${String(err)}`);
   }
 };

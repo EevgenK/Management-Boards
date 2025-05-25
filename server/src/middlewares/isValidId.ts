@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 import { getBoardSchema } from '../db/validation/board.validation';
 
 export const isValidId: RequestHandler = (req, _res, next) => {
-  const { id } = req.params;
+  const id = Object.values(req.params)[0];
   const { error } = getBoardSchema.validate({ inputId: id });
 
   if (error) {

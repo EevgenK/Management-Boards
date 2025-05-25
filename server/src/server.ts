@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { getEnvVar } from './utils/getEnvVar';
 import pino from 'pino-http';
 import {
@@ -8,8 +9,15 @@ import {
 } from './middlewares/index';
 
 import router from './routs';
+import { checkCorsOrigin } from './utils/checkCorsOrigin';
+import { PORT } from './constants';
 
-const PORT = Number(getEnvVar('PORT', '4000'));
+const corsOptions = {
+  origin: checkCorsOrigin,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  credentials: true,
+};
+
 export const setupServer = () => {
   const app = express();
   app.use(
@@ -17,6 +25,7 @@ export const setupServer = () => {
       type: ['application/json', 'application/vnd.api+json'],
     }),
   );
+  app.use(cors(corsOptions));
   app.use(
     pino({
       transport: {

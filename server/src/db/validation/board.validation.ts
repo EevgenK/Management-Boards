@@ -15,5 +15,4 @@ export const createBoardSchema = Joi.object({
     minLength: 5,
     maxLength: 20,
   }),
-  inputId: inputIdSchema,
 });

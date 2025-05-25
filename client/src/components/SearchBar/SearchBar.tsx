@@ -2,8 +2,12 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
 import CustomButton from '../shared/CustomButton/CustomButton';
 import s from './SearchForm.module.css';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { fetchBoard } from '../../redux/board/boardOperations';
 
 const SearchBar = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState('');
 
   const onHandleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +17,8 @@ const SearchBar = () => {
   const onHandleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { value } = e.currentTarget.input;
-    console.log(value.trim());
+    const query = value.trim();
+    dispatch(fetchBoard(query));
     setSearch('');
   };
 

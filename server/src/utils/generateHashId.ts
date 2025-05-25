@@ -8,9 +8,10 @@ import crypto from 'crypto';
  */
 export const generateHashId = (inputId: string): string => {
   const trimmedId = inputId.trim().toLowerCase();
+  const salt = crypto.randomBytes(16).toString('hex');
   return crypto
     .createHash('sha256')
-    .update(trimmedId)
+    .update(trimmedId + salt)
     .digest('hex')
-    .slice(0, 10);
+    .slice(0, 12);
 };
