@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICard } from '../../../../shared/types';
-import { batchUpdateCards, editCard, fetchCards } from './cardsOperations';
+import {
+  batchUpdateCards,
+  createCard,
+  deleteCard,
+  editCard,
+  fetchCards,
+} from './cardsOperations';
 
 interface CardState {
   cards: ICard[] | [];
@@ -17,6 +23,11 @@ const cardsSlice = createSlice({
   name: 'cards',
   initialState: initialState,
   reducers: {
+    resetCards(state) {
+      state.cards = [];
+      state.error = null;
+      state.isLoading = false;
+    },
     updateCardsOptimistically(state, action: PayloadAction<ICard[]>) {
       action.payload.forEach((updatedCard) => {
         const index = state.cards.findIndex(
@@ -39,8 +50,11 @@ const cardsSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchCards.rejected, (state, action) => {
-      state.error = action.payload?.message || 'Something went wrong';
+      state.error =
+        action.payload?.message + '. Add your first Card please.' ||
+        'Something went wrong';
       state.cards = [];
+      state.isLoading = false;
     });
     builder.addCase(batchUpdateCards.pending, (state) => {
       state.isLoading = true;
@@ -53,12 +67,12 @@ const cardsSlice = createSlice({
     });
     builder.addCase(batchUpdateCards.rejected, (state, action) => {
       if (action.payload) {
-        console.log(action.payload.error.message);
         state.error = action.payload.error.message;
         state.cards = action.payload.previousCards;
       } else {
         state.error = 'Something went wrong. Try again please.';
       }
+      state.isLoading = false;
     });
     builder.addCase(editCard.pending, (state) => {
       state.isLoading = true;
@@ -73,8 +87,36 @@ const cardsSlice = createSlice({
     });
     builder.addCase(editCard.rejected, (state, action) => {
       state.error = action.payload?.message || 'Something went wrong';
+      state.isLoading = false;
+    });
+    builder.addCase(createCard.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(createCard.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.cards = [state.cards, action.payload].flat();
+      state.error = null;
+    });
+    builder.addCase(createCard.rejected, (state, action) => {
+      state.error = action.payload?.message || 'Something went wrong';
+    });
+    builder.addCase(deleteCard.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteCard.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.cards = state.cards.filter(
+        (card) => card._id !== action.payload.deletedId,
+      );
+      state.error = null;
+    });
+    builder.addCase(deleteCard.rejected, (state, action) => {
+      state.error = action.payload?.message || 'Something went wrong';
+      state.isLoading = false;
     });
   },
 });
-export const { updateCardsOptimistically } = cardsSlice.actions;
+export const { updateCardsOptimistically, resetCards } = cardsSlice.actions;
 export default cardsSlice.reducer;

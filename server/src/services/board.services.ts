@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { BoardsCollection } from '../db/models/board';
 
 import { generateHashId } from '../utils/generateHashId';
+import { CardsCollection } from '../db/models/cards';
 
 export const createBoard = async (payload: { name: string }) => {
   const { name } = payload;
@@ -31,6 +32,9 @@ export const getBoard = async (inputId: string) => {
 export const deleteBoardById = async (id: string) => {
   try {
     const board = await BoardsCollection.findOneAndDelete({ hashId: id });
+    if (board) {
+      await CardsCollection.deleteMany({ boardId: id });
+    }
     return board;
   } catch (error) {
     console.error('Failed to delete board by hashId:', error);

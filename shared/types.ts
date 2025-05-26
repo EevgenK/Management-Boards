@@ -30,4 +30,9 @@ export interface BatchUpdateCard {
   status: 'todo' | 'inprogress' | 'done';
   order: number;
 }
+export interface DeleteCardResponse {
+  message: string;
+  deletedId: string;
+}
 export type EditCardType = Pick<ICard, '_id' | 'title' | 'description'>;
+export type AddCardType = Omit<ICard, '_id'>;

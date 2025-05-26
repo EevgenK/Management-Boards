@@ -1,9 +1,10 @@
 .form {
   margin: 0 auto;
-  width: 320px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-height: 300px;
 }
 .edit {
   text-transform: uppercase;
@@ -15,7 +16,7 @@
 .input {
   outline: none;
   padding: 8px;
-  width: 250px;
+
   border: 3px solid var(--bg-color);
   border-radius: 8px;
   width: 100%;
@@ -29,4 +30,8 @@
   .form {
     padding: 30px;
   }
+}
+.error {
+  font-size: 12px;
+  color: var(--red-color);
 }

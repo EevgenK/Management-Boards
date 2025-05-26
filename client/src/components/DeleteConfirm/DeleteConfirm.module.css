@@ -1,0 +1,14 @@
+.delete {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 20px;
+  min-height: 200px;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+}

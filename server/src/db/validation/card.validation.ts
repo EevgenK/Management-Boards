@@ -18,7 +18,7 @@ export const createCardSchema = Joi.object({
   description: createCommonStringValidation({
     element: 'description',
     required: false,
-    minLength: 5,
+    minLength: 0,
     maxLength: 100,
   }),
   status: createEnumValidation('status'),
@@ -42,8 +42,8 @@ export const updateCardSchema = Joi.object({
   description: createCommonStringValidation({
     element: 'description',
     required: false,
-    minLength: 5,
-    maxLength: 40,
+    minLength: 0,
+    maxLength: 100,
   }),
 });
 export const deleteCardSchema = Joi.object({

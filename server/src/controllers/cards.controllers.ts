@@ -46,13 +46,14 @@ export const patchCardController: RequestHandler = async (req, res) => {
 export const deleteCardController: RequestHandler = async (req, res) => {
   const { id } = req.params;
   const { _id } = req.body;
-  const contact = await deleteCardById(id, _id);
-  if (!contact) {
-    throw createHttpError(404, 'Contact not found');
+  const card = await deleteCardById(id, _id);
+  if (!card) {
+    throw createHttpError(404, 'Card not found');
   }
   res.json({
-    status: 204,
+    status: 200,
     message: `Successfully deleted a card!`,
+    deletedId: card._id,
   });
 };
 export const updateBatchController: RequestHandler = async (req, res) => {

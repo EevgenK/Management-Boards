@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '../../utils/api/api';
 import {
+  AddCardType,
   BackendError,
   BackendSuccessResponse,
   BatchUpdateCard,
+  DeleteCardResponse,
   EditCardType,
   ICard,
 } from '../../../../shared/types';
@@ -61,8 +63,40 @@ export const editCard = createAsyncThunk<
       `cards/${boardId}`,
       query,
     );
-    console.log('RESP--->>', res.data.data);
+
     return res.data.data;
+  } catch (err) {
+    return rejectWithValue(handleAxiosError(err));
+  }
+});
+export const createCard = createAsyncThunk<
+  ICard[],
+  AddCardType,
+  { rejectValue: BackendError }
+>('cards/createCard', async (query, { rejectWithValue }) => {
+  try {
+    const res = await instance.post<BackendSuccessResponse<ICard[]>>(
+      `cards/`,
+      query,
+    );
+
+    return res.data.data;
+  } catch (err) {
+    return rejectWithValue(handleAxiosError(err));
+  }
+});
+
+export const deleteCard = createAsyncThunk<
+  DeleteCardResponse,
+  { boardId: string; _id: string },
+  { rejectValue: BackendError }
+>('cards/deleteCard', async ({ boardId, _id }, { rejectWithValue }) => {
+  try {
+    const res = await instance.delete<DeleteCardResponse>(`cards/${boardId}`, {
+      data: { _id },
+    });
+
+    return res.data;
   } catch (err) {
     return rejectWithValue(handleAxiosError(err));
   }

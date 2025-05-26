@@ -1,0 +1,12 @@
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.superscript {
+  font-size: 0.7em;
+  margin-left: 0.5em;
+  color: var(--bg-color_hover);
+}

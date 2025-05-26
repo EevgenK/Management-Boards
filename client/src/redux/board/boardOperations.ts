@@ -14,7 +14,7 @@ export const fetchBoard = createAsyncThunk<
   {
     rejectValue: BackendError;
   }
->('board/fetchBoard', async (inputId, thunkAPI) => {
+>('board/fetchBoard', async (inputId, { rejectWithValue }) => {
   try {
     const res = await instance.get<BackendSuccessResponse<IBoard>>(
       `boards/${inputId}`,
@@ -22,7 +22,7 @@ export const fetchBoard = createAsyncThunk<
 
     return res.data.data;
   } catch (err) {
-    return thunkAPI.rejectWithValue(handleAxiosError(err));
+    return rejectWithValue(handleAxiosError(err));
   }
 });
 
@@ -32,15 +32,26 @@ export const createBoard = createAsyncThunk<
   {
     rejectValue: BackendError;
   }
->('board/createBoard', async (name, thunkAPI) => {
+>('board/createBoard', async (name, { rejectWithValue }) => {
   try {
     const res = await instance.post<BackendSuccessResponse<IBoard>>(`boards`, {
       name,
     });
     return res.data.data;
   } catch (err) {
-    return thunkAPI.rejectWithValue(
-      handleAxiosError(err, 'Failed to create board'),
-    );
+    return rejectWithValue(handleAxiosError(err, 'Failed to create board'));
+  }
+});
+export const deleteBoard = createAsyncThunk<
+  void,
+  string,
+  {
+    rejectValue: BackendError;
+  }
+>('board/deleteBoard', async (boardId, { rejectWithValue }) => {
+  try {
+    await instance.delete(`boards/${boardId}`);
+  } catch (err) {
+    return rejectWithValue(handleAxiosError(err, 'Failed to delete board'));
   }
 });

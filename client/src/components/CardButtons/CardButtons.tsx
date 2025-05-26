@@ -1,14 +1,15 @@
 import { IoCreateSharp } from 'react-icons/io5';
 import CustomButton from '../shared/CustomButton/CustomButton';
 import s from './CardButtons.module.css';
-import { ImBin } from 'react-icons/im';
+
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { openModal } from '../../redux/modal/modalSlice';
 import { ICard } from '../../../../shared/types';
+import { ImBin } from 'react-icons/im';
 
 export type CardButtonsProps = {
-  item: Pick<ICard, '_id' | 'title' | 'description'>;
+  item: Pick<ICard, 'boardId' | '_id' | 'title' | 'description'>;
 };
 const CardButtons = ({ item }: CardButtonsProps) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +31,7 @@ const CardButtons = ({ item }: CardButtonsProps) => {
         aria-label="delete card"
         additionalClass={s.btn}
         type="button"
-        onClick={() => onModalOpen('delete')}
+        onClick={() => onModalOpen('deleteCard')}
       >
         <ImBin className={s.icon} />
       </CustomButton>

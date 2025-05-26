@@ -7,6 +7,11 @@ import { AppDispatch } from '../../redux/store';
 import { fetchCards } from '../../redux/cards/cardsOperations';
 import CardsBoard from '../../components/CardsBoard/CardsBoard';
 import Container from '../../components/shared/Container/Container';
+import BoardName from '../../components/BoardName/BoardName';
+import LeaveBoardButton from '../../components/LeaveBoardButton/LeaveBoardButton';
+import { resetCards } from '../../redux/cards/cardsSlice';
+import DeleteBoardButton from '../../components/DeleteBoardButton/DeleteBoardButton';
+import s from './BoardPage.module.css';
 
 const BoardPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,19 +20,27 @@ const BoardPage = () => {
   const board = useSelector(selectBoard);
 
   useEffect(() => {
-    if (!board) {
+    if (!board?.hashId) {
+      dispatch(resetCards());
       navigate(`/`);
     } else {
       dispatch(fetchCards(board.hashId));
     }
-  }, [board, navigate, dispatch]);
+  }, [board, navigate, dispatch, cards.length]);
 
   return (
-    <main>
+    <section>
       <Container>
-        {cards.length ? <CardsBoard /> : <h2>No cards yet</h2>}
+        <div className={s.wrap}>
+          <BoardName />
+          <div className={s.buttons}>
+            <LeaveBoardButton />
+            <DeleteBoardButton item={board?.hashId ?? ''} />
+          </div>
+        </div>
+        <CardsBoard />
       </Container>
-    </main>
+    </section>
   );
 };
 

@@ -1,11 +1,11 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { EditCardType } from '../../../../shared/types';
+import { ICard } from '../../../../shared/types';
 
 import s from './CardItem.module.css';
 
 import CardButtons from '../CardButtons/CardButtons';
 export type CardItemProps = {
-  card: EditCardType;
+  card: Pick<ICard, 'boardId' | '_id' | 'title' | 'description'>;
   index: number;
 };
 
@@ -25,6 +25,7 @@ const CardItem = ({ card, index }: CardItemProps) => (
             _id: card._id,
             title: card.title,
             description: card.description,
+            boardId: card.boardId,
           }}
         />
       </div>

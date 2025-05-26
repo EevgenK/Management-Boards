@@ -1,8 +1,11 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
 import { selectCardsError } from '../../redux/cards/cardsSelectors';
-import { selectBoardsError } from '../../redux/board/boardSelectors';
+import {
+  selectBoard,
+  selectBoardsError,
+} from '../../redux/board/boardSelectors';
 import { ToastContainer, Zoom } from 'react-toastify';
 
 import { useShowErrors } from '../../utils/hooks/useShowErrors';
@@ -14,6 +17,7 @@ import {
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import EditCardFrom from '../EditCardFrom/EditCardFrom';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm';
+import AddCardForm from '../AddCardForm/AddCardForm';
 
 const Layout = () => {
   const cardsError = useSelector(selectCardsError);
@@ -29,8 +33,12 @@ const Layout = () => {
     switch (currentModalType) {
       case 'edit':
         return <EditCardFrom />;
-      case 'delete':
-        return <DeleteConfirm />;
+      case 'addCard':
+        return <AddCardForm />;
+      case 'deleteCard':
+        return <DeleteConfirm type="Card" />;
+      case 'deleteBoard':
+        return <DeleteConfirm type="Board" />;
 
       default:
         return null;
@@ -44,7 +52,14 @@ const Layout = () => {
       setModalContent(null);
     }
   }, [checkCurrentModalType, modalOpen]);
+  const navigate = useNavigate();
+  const board = useSelector(selectBoard)?.hashId;
 
+  useEffect(() => {
+    if (board) {
+      navigate(`/board/${board}`);
+    }
+  }, [board, navigate]);
   return (
     <>
       <Header />
