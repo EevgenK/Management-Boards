@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node src/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon",
     "lint": "eslint . --ext .ts,",
     "vercel-build": "tsc"
