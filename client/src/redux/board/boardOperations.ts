@@ -2,7 +2,6 @@ import {
   BackendError,
   BackendSuccessResponse,
   GetBoard,
-  IBoard,
 } from './../../../../shared/types';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
