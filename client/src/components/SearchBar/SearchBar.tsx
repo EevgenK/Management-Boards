@@ -1,12 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
 import CustomButton from '../shared/CustomButton/CustomButton';
 import s from './SearchForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { fetchBoard } from '../../redux/board/boardOperations';
-import { useNavigate } from 'react-router-dom';
-import { selectBoard } from '../../redux/board/boardSelectors';
 
 const SearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
