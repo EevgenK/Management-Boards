@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { getEnvVar } from './utils/getEnvVar';
 import pino from 'pino-http';
 import {
   domainHandler,

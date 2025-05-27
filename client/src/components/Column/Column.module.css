@@ -7,7 +7,6 @@
   flex-direction: column;
   min-width: 100px;
   transition: background-color 0.3s;
-  /* overflow-y: hidden; */
 }
 .column_title {
   font-weight: bold;
