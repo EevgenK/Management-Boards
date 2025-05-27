@@ -4,14 +4,18 @@ import s from './NewBoardForm.module.css';
 import CustomButton from '../shared/CustomButton/CustomButton';
 import { newBoardSchema } from '../../utils/validation/newBoardSchema ';
 import { validateYupSchema } from '../../utils/validation/validateYupSchema';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { createBoard } from '../../redux/board/boardOperations';
+import { selectCardsIsLoading } from '../../redux/cards/cardsSelectors';
+import { selectBoardsIsLoading } from '../../redux/board/boardSelectors';
 
 const NewBoardForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [newBoard, setNewBoard] = useState('');
   const [errors, setErrors] = useState<{ name?: string }>({});
+  const isCardsLoading = useSelector(selectCardsIsLoading);
+  const isBoardLoading = useSelector(selectBoardsIsLoading);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -27,6 +31,7 @@ const NewBoardForm = () => {
     });
 
     if (isValid) {
+      console.log(trimmed);
       await dispatch(createBoard(trimmed));
       setNewBoard('');
       setErrors({});
@@ -53,7 +58,11 @@ const NewBoardForm = () => {
       />
       {errors && <p className={s.error}>{errors?.name}</p>}
 
-      <CustomButton additionalClass={s.button} type="submit">
+      <CustomButton
+        additionalClass={s.button}
+        type="submit"
+        disabled={isCardsLoading || isBoardLoading}
+      >
         {' '}
         Create <IoCreate className={s.icon} />
       </CustomButton>

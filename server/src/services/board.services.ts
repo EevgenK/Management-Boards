@@ -13,20 +13,23 @@ export const createBoard = async (payload: { name: string }) => {
   if (existing)
     throw createHttpError(409, `Board with ID ${hashId} already exist`);
 
-  const board = await BoardsCollection.create({ hashId, name });
-  const { _id, ...data } = board.toObject();
-  return data;
+  const result = await BoardsCollection.create({ hashId, name });
+  const { _id, ...board } = result.toObject();
+
+  return { board, existCards: false };
 };
 
 export const getBoard = async (inputId: string) => {
-  const board = await BoardsCollection.findOne({ hashId: inputId });
+  const result = await BoardsCollection.findOne({ hashId: inputId });
 
-  if (!board) {
+  if (!result) {
     throw createHttpError(404, 'Board not found');
   }
+  const isCards = (await CardsCollection.find({ boardId: result.hashId }))
+    .length;
 
-  const { _id, ...data } = board.toObject();
-  return data;
+  const { _id, ...board } = result.toObject();
+  return { board, existCards: Boolean(isCards) };
 };
 
 export const deleteBoardById = async (id: string) => {

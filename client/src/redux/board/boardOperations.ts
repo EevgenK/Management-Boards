@@ -1,6 +1,7 @@
 import {
   BackendError,
   BackendSuccessResponse,
+  GetBoard,
   IBoard,
 } from './../../../../shared/types';
 
@@ -9,14 +10,14 @@ import { instance } from '../../utils/api/api';
 import { handleAxiosError } from '../../utils/api/handleAxiosError';
 
 export const fetchBoard = createAsyncThunk<
-  IBoard,
+  GetBoard,
   string,
   {
     rejectValue: BackendError;
   }
 >('board/fetchBoard', async (inputId, { rejectWithValue }) => {
   try {
-    const res = await instance.get<BackendSuccessResponse<IBoard>>(
+    const res = await instance.get<BackendSuccessResponse<GetBoard>>(
       `boards/${inputId}`,
     );
 
@@ -27,16 +28,19 @@ export const fetchBoard = createAsyncThunk<
 });
 
 export const createBoard = createAsyncThunk<
-  IBoard,
+  GetBoard,
   string,
   {
     rejectValue: BackendError;
   }
 >('board/createBoard', async (name, { rejectWithValue }) => {
   try {
-    const res = await instance.post<BackendSuccessResponse<IBoard>>(`boards`, {
-      name,
-    });
+    const res = await instance.post<BackendSuccessResponse<GetBoard>>(
+      `boards`,
+      {
+        name,
+      },
+    );
     return res.data.data;
   } catch (err) {
     return rejectWithValue(handleAxiosError(err, 'Failed to create board'));

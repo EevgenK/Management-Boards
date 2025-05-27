@@ -34,5 +34,9 @@ export interface DeleteCardResponse {
   message: string;
   deletedId: string;
 }
+export interface GetBoard {
+  board: IBoard;
+  existCards: boolean;
+}
 export type EditCardType = Pick<ICard, '_id' | 'title' | 'description'>;
 export type AddCardType = Omit<ICard, '_id'>;

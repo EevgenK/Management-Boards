@@ -7,6 +7,7 @@
 .text {
   font-size: 24px;
   margin-bottom: 10px;
+  text-align: justify;
 }
 .pre_title {
   margin-bottom: 10px;
