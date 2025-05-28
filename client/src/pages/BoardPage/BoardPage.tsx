@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   selectBoard,
   selectIsEmptyBoard,
@@ -15,23 +15,27 @@ import LeaveBoardButton from '../../components/LeaveBoardButton/LeaveBoardButton
 import { resetCards } from '../../redux/cards/cardsSlice';
 import DeleteBoardButton from '../../components/DeleteBoardButton/DeleteBoardButton';
 import s from './BoardPage.module.css';
+import { fetchBoard } from '../../redux/board/boardOperations';
 
 const BoardPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const cards = useSelector(selectCards);
-  const board = useSelector(selectBoard);
+  const { id: pageId } = useParams();
+  const boardId = useSelector(selectBoard)?.hashId;
   const existCards = useSelector(selectIsEmptyBoard);
 
   useEffect(() => {
-    if (!board?.hashId) {
+    if (!boardId && !pageId) {
       dispatch(resetCards());
       navigate(`/`);
       return;
-    } else if (existCards) {
-      dispatch(fetchCards(board.hashId));
     }
-  }, [board, navigate, dispatch, cards.length, existCards]);
+    if (!boardId && pageId) {
+      dispatch(fetchBoard(pageId));
+    } else if (existCards && boardId) {
+      dispatch(fetchCards(boardId));
+    }
+  }, [boardId, navigate, dispatch, pageId, existCards]);
 
   return (
     <section>
@@ -40,7 +44,7 @@ const BoardPage = () => {
           <BoardName />
           <div className={s.buttons}>
             <LeaveBoardButton />
-            <DeleteBoardButton item={board?.hashId ?? ''} />
+            <DeleteBoardButton item={boardId ?? ''} />
           </div>
         </div>
         <CardsBoard />
