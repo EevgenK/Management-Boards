@@ -5,7 +5,7 @@ import {
   selectBoard,
   selectIsEmptyBoard,
 } from '../../redux/board/boardSelectors';
-import { selectCards } from '../../redux/cards/cardsSelectors';
+
 import { AppDispatch } from '../../redux/store';
 import { fetchCards } from '../../redux/cards/cardsOperations';
 import CardsBoard from '../../components/CardsBoard/CardsBoard';
