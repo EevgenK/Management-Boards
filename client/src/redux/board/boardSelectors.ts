@@ -5,3 +5,4 @@ export const selectBoardsError = (state: RootState) => state.boards.error;
 export const selectBoardsIsLoading = (state: RootState) =>
   state.boards.isLoading;
 export const selectIsEmptyBoard = (state: RootState) => state.boards.existCards;
+export const selectIsExited = (state: RootState) => state.boards.exit;

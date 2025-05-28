@@ -6,6 +6,7 @@ interface BoardState {
   error: string | null;
   isLoading: boolean;
   existCards: boolean;
+  exit: boolean;
 }
 
 const initialState: BoardState = {
@@ -13,17 +14,22 @@ const initialState: BoardState = {
   error: null,
   isLoading: false,
   existCards: false,
+  exit: true,
 };
 
 const boardSlice = createSlice({
   name: 'board',
   initialState: initialState,
   reducers: {
+    enterBoard(state) {
+      state.exit = false;
+    },
     resetBoard(state) {
       state.board = null;
       state.error = null;
       state.isLoading = false;
       state.existCards = false;
+      state.exit = true;
     },
   },
   extraReducers: (builder) => {
@@ -37,6 +43,7 @@ const boardSlice = createSlice({
       state.board = action.payload.board;
       state.error = null;
       state.existCards = action.payload.existCards;
+      state.exit = false;
     });
     builder.addCase(fetchBoard.rejected, (state, action) => {
       state.error = action.payload?.message || 'Something went wrong';
@@ -53,6 +60,7 @@ const boardSlice = createSlice({
       state.board = action.payload.board;
       state.error = null;
       state.existCards = action.payload.existCards;
+      state.exit = false;
     });
     builder.addCase(createBoard.rejected, (state, action) => {
       state.error = action.payload?.message || 'Something went wrong';
@@ -68,6 +76,7 @@ const boardSlice = createSlice({
       state.error = null;
       state.isLoading = false;
       state.existCards = false;
+      state.exit = true;
     });
     builder.addCase(deleteBoard.rejected, (state, action) => {
       state.error = action.payload?.message || 'Something went wrong';
@@ -75,5 +84,5 @@ const boardSlice = createSlice({
     });
   },
 });
-export const { resetBoard } = boardSlice.actions;
+export const { resetBoard, enterBoard } = boardSlice.actions;
 export default boardSlice.reducer;
