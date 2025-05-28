@@ -5,24 +5,25 @@ import { selectModalProperties } from '../../redux/modal/modalSelectors';
 import { EditCardType } from '../../../../shared/types';
 
 import { editCardSchema } from '../../utils/validation/editCardSchema';
-import { selectBoard } from '../../redux/board/boardSelectors';
+
 import { editCard } from '../../redux/cards/cardsOperations';
 import CardForm from '../shared/CardForm/CardForm';
 
 const EditCardFrom = () => {
-  const boardId = useSelector(selectBoard)?.hashId;
   const target = useSelector(selectModalProperties);
   const dispatch = useDispatch<AppDispatch>();
 
-  const initialCard: EditCardType = target ?? {
+  const initialCard: EditCardType & { boardId: string } = target ?? {
+    boardId: '',
     _id: '',
     title: '',
     description: '',
   };
 
-  const handleSubmit = async (card: EditCardType) => {
+  const handleSubmit = async (card: EditCardType & { boardId: string }) => {
+    const { boardId, ...query } = card;
     if (boardId) {
-      await dispatch(editCard({ boardId, query: card }));
+      await dispatch(editCard({ boardId, query }));
     }
   };
 

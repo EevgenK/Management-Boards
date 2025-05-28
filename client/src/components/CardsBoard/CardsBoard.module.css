@@ -1,6 +1,6 @@
 .board_wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 0.5rem;
   padding: 1rem;
   min-height: 80vh;
@@ -10,5 +10,6 @@
 @media screen and (min-width: 768px) {
   .board_wrapper {
     gap: 1rem;
+    justify-content: center;
   }
 }

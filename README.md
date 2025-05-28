@@ -1,54 +1,113 @@
-# React + TypeScript + Vite
+# Management Boards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Management Boards** is a responsive, modern and minimalistic task board management application inspired by Kanban which allows create, edit, and organize boards and cards within columns using drag-and-drop.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🗃 Create and manage boards
+- 📝 Create, edit, and delete cards
+- 🔀 Drag and drop cards between columns
+- ✅ Persistent Redux state
+- 🔐 Input validation and user feedback
+- 📱 Responsive layout (basic)
 
-## Expanding the ESLint configuration
+## ⚙️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🔵 Frontend (/client)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- React 19, React Router v7
+- Redux Toolkit & redux-persist
+- Drag & Drop with @hello-pangea/dnd
+- Yup for form validation
+- Axios for API requests
+- React Toastify for notifications
+- Built with Vite
+
+### 🔴 Backend (/server)
+
+- Express.js v5
+- MongoDB with Mongoose
+- Joi for validation
+- Pino for structured logging
+- TypeScript + Esbuild
+- .env for environment variables
+
+## 📁 Project Structure
+
+```bash
+root/
+├── client/   → Frontend (React + Vite + Redux Toolkit)
+├── server/   → Backend (Express.js + MongoDB)
+├── share/    → Common files
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- MongoDB instance (local or remote)
+- Vercel CLI (optional for deployment)
+
+### Local Development
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/EevgenK/Management-Boards
+cd management-boards
 ```
+
+2. Setup the backend:
+
+```bash
+cd server
+npm install
+cp .env.example .env  # create your environment variables
+npm run dev
+```
+
+3. Setup the frontend:
+
+```bash
+cd ../client
+npm install
+npm run dev
+```
+
+### 📦 Build & Deployment
+
+1. Frontend (/client):
+
+```bash
+npm run build       # or npm run vercel-build for Vercel
+npm run preview     # optional, to preview the production build locally
+```
+
+2. Backend (/server):
+
+```bash
+npm run build
+npm start           # runs compiled code from /dist
+```
+
+### 🧪 Linting
+
+Run ESLint on both frontend and backend:
+
+```bash
+# frontend
+cd client
+npm run lint
+
+# backend
+cd ../server
+npm run lint
+```
+
+## 👤 Author
+
+Evgen Kulbachenko
+
+👉 [More works and contact info](https://portfolio-react-gamma-orcin.vercel.app/)
